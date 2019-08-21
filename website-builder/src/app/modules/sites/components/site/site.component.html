@@ -1,0 +1,18 @@
+<div class="site">
+  <div class="site-card">
+  <!--  Todo: add real preview img  -->
+
+    <!-- Card Overlay -->
+    <div class="site-overlay">
+      <a [matMenuTriggerFor]="siteOverlayMenu"><i class="material-icons">more_horiz</i></a>
+      <mat-menu
+          class="main-menu"
+          #siteOverlayMenu="matMenu">
+        <button
+          mat-menu-item
+          (click)="removeSite(data.id)">Remove Site</button>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="site-title">{{data.name}}</div>
+</div>

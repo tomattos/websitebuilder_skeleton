@@ -1,0 +1,67 @@
+@import '../../../../modules/sites/containers/sites/sites.component';
+@import 'colors.scss';
+
+.templates {
+  &-header {
+    @extend .sites-header;
+  }
+
+  &-back {
+    .material-icons {
+      color: $secondary-gray-dark;
+    }
+  }
+
+  &-title {
+    @extend .sites-title;
+    flex: 1;
+    text-align: center;
+  }
+
+  &-content {
+    @extend .sites-content;
+  }
+
+  &-list {
+    @extend .sites-list;
+    grid-template-columns: repeat(3, 3fr);
+  }
+}
+
+.template {
+  @extend .site;
+
+  &-card {
+    @extend .site-card;
+    height: 280px;
+  }
+
+  &-create-card {
+    @extend .site-create-card;
+  }
+
+  &-create-header {
+    @extend .site-create-header;
+  }
+
+  &-overlay {
+    @extend .site-overlay;
+    cursor: default;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 40px;
+  }
+
+  &-button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    button {
+      margin: 0 5px;
+    }
+  }
+
+  &-title {
+    @extend .site-title;
+  }
+}

@@ -1,0 +1,60 @@
+<div class="sites">
+  <!-- Header -->
+  <header class="sites-header">
+    <a href="" class="sites-logo">
+      <img src="../../../../../assets/images/AdIQ-Logo-dark.svg" alt="Logo">
+    </a>
+
+    <h4 class="sites-title">My sites</h4>
+
+    <!-- Header menu -->
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]="headerMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu
+          class="main-menu"
+          #headerMenu="matMenu">
+        <button mat-menu-item>
+          <i class="material-icons">picture_in_picture</i>
+          My Sites
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <i class="material-icons">exit_to_app</i>
+          Logout
+        </button>
+      </mat-menu>
+    </div>
+  </header>
+
+  <!-- Sites list -->
+  <div class="container">
+    <div class="sites-content">
+      <div class="sites-list">
+        <!-- Create new site card -->
+        <div class="site">
+          <div class="site-card site-create-card">
+            <div class="site-create-header">
+              <i class="material-icons">more_horiz</i>
+            </div>
+
+            <button
+              mat-icon-button
+              class="site-create-button"
+              routerLink="/templates">
+              <i class="material-icons">add_circle_outline</i>
+            </button>
+          </div>
+
+          <div class="site-title">Create new site</div>
+        </div>
+
+        <!-- List of sites -->
+        <wb-site
+          *ngFor="let site of sites$ | async; trackBy: trackById"
+          [data]="site"
+          (removeSiteEvent)="removeSite($event)"></wb-site>
+      </div>
+    </div>
+  </div>
+</div>

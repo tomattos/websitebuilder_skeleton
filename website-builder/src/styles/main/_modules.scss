@@ -1,0 +1,86 @@
+@import "colors.scss";
+@import "shadow.scss";
+
+.main {
+  /* Buttons */
+  &-button {
+    &.mat-flat-button,
+    &.mat-stroked-button {
+      height: 48px;
+      width: 200px;
+      max-width: 100%;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      color: inherit;
+    }
+  }
+
+  /* Form Fields */
+  &-form-field {
+    .mat-form-field-flex {
+      align-items: flex-end;
+      height: 60px;
+      width: 100%;
+      padding: 0 20px;
+      border-radius: 4px 4px 0 0;
+      background-color: $secondary-gray-lighter-2;
+    }
+
+    .mat-form-field-infix {
+      padding: 10px 0;
+    }
+  }
+
+  /* Menu Dropdown */
+  &-menu {
+    &.mat-menu-panel {
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: $shadow-strong;
+    }
+
+    .mat-menu-item {
+      display: flex;
+      align-items: center;
+      height: auto;
+      margin: 32px 0;
+      padding: 0;
+      line-height: normal;
+      font-size: 18px;
+      font-weight: bold;
+      color: $primary-gray;
+
+      .material-icons {
+        margin-right: 10px;
+        font-size: 24px;
+        color: $secondary-gray-dark;
+      }
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        background-color: inherit;
+        color: $primary-green;
+
+        .material-icons {
+          color: $primary-green;
+        }
+      }
+    }
+  }
+
+  /* Dialog Modal */
+  &-dialog {
+    .mat-dialog-container {
+      padding: 32px 40px;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="templates">
+  <!-- Header -->
+  <header class="templates-header">
+    <a class="templates-back" routerLink="/sites"><i class="material-icons">arrow_back</i></a>
+
+    <h4 class="templates-title">Choose the website template you like</h4>
+  </header>
+
+  <!-- templates list -->
+  <div class="container">
+    <div class="templates-content">
+      <div class="templates-list">
+        <!-- Create new template card -->
+        <div class="template">
+          <div class="template-card template-create-card">
+            <div class="template-create-header">
+              <i class="material-icons">more_horiz</i>
+            </div>
+
+            <!-- Overlay with buttons -->
+            <div class="template-overlay">
+              <div class="template-button-group">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="main-button"
+                  (click)="openChooseCompanyModal()">Create</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="template-title">Create from Blank</div>
+        </div>
+
+        <!-- List of templates -->
+        <wb-template
+          *ngFor="let template of templates$ | async; trackBy: trackById"
+          [data]="template"></wb-template>
+      </div>
+    </div>
+  </div>
+</div>

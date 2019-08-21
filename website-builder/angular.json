@@ -10,6 +10,10 @@
           "style": "scss",
           "skipTests": true
         },
+        "@ngrx/schematics:container": {
+          "style": "scss",
+          "spec": false
+        },
         "@schematics/angular:class": {
           "skipTests": true
         },
@@ -49,6 +53,9 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles/global"]
+            },
             "scripts": []
           },
           "configurations": {
@@ -81,7 +88,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "website-builder:build"
+            "browserTarget": "website-builder:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
