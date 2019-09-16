@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'templates',
     loadChildren: () => import('../templates/templates.module').then(m => m.TemplatesModule)
+  },
+  {
+    path: 'template',
+    loadChildren: () => import('../single-template/single-template.module').then(m => m.SingleTemplateModule)
   }
 ];
 

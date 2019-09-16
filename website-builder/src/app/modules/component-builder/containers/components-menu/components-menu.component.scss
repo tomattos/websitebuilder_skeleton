@@ -1,0 +1,33 @@
+@import "colors.scss";
+@import "shadow.scss";
+
+.component-menu {
+
+  &-add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 120px;
+    border-radius: 50%;
+    box-shadow: $shadow-strong;
+    background-color: $primary-white;
+    cursor: pointer;
+
+    .material-icons {
+      font-size: 70px;
+      color: $primary-green;
+    }
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 210px;
+    margin: 16px 0;
+
+    .material-icons {
+      margin-right: 0;
+    }
+  }
+}

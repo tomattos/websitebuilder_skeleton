@@ -1,0 +1,36 @@
+@import "mixins.scss";
+
+.component-controls {
+  position: relative;
+
+  &-components-menu {
+    ::ng-deep .component-menu-add-button {
+      position: absolute;
+      bottom: -25px;
+      left: calc(50% - 25px);
+      z-index: 1;
+      margin-top: 0;
+      .material-icons {
+        font-size: 29px;
+      }
+    }
+    @include visibility_hide_animation;
+  }
+
+  &-settings-modal {
+    ::ng-deep .component-settings-edit-btn {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      z-index: 1;
+    }
+    @include visibility_hide_animation;
+  }
+
+  &:hover {
+    .component-controls-components-menu,
+    .component-controls-settings-modal {
+      @include visibility_show_animation;
+    }
+  }
+}

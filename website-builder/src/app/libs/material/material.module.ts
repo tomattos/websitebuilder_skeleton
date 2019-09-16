@@ -7,7 +7,11 @@ import {
   MatInputModule,
   MatMenuModule,
   MatDialogModule,
-  MatSelectModule, MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS
+  MatSelectModule,
+  MatDialogConfig,
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MatTabsModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 const modules = [
@@ -18,7 +22,9 @@ const modules = [
   MatCheckboxModule,
   MatMenuModule,
   MatDialogModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Company } from '../../interfaces/company.interface';
 
@@ -11,5 +11,5 @@ export class ChooseCompanyModalComponent {
   constructor(
     public dialogRef: MatDialogRef<ChooseCompanyModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Company[]
-  ) {}
+  ) { }
 }

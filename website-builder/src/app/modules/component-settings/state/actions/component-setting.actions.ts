@@ -1,24 +1,25 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { ComponentSettings } from '../../interfaces/component-settings.interface';
+import { Update } from '@ngrx/entity';
 
 export enum ComponentSettingActionTypes {
-  LoadComponentSettings = '[ComponentSetting] Load ComponentSettings',
-  LoadComponentSettingsSuccess = '[ComponentSetting] Load ComponentSettings Success',
-  LoadComponentSettingsFailure = '[ComponentSetting] Load ComponentSettings Failure',
+  AddComponentSetting = '[ComponentSetting] Add Component Setting',
+  UpdateComponentSetting = '[ComponentSetting] Update Component Setting',
+  UpdateComponentsSettings = '[ComponentSettings] Update Component Settings'
 }
 
-export class LoadComponentSettings implements Action {
-  readonly type = ComponentSettingActionTypes.LoadComponentSettings;
-}
+export const addComponentSettings = createAction(
+  ComponentSettingActionTypes.AddComponentSetting,
+  props<{ componentSettings: ComponentSettings<any> }>()
+);
 
-export class LoadComponentSettingsSuccess implements Action {
-  readonly type = ComponentSettingActionTypes.LoadComponentSettingsSuccess;
-  constructor(public payload: { data: any }) { }
-}
+export const updateComponentSettings = createAction(
+  ComponentSettingActionTypes.UpdateComponentSetting,
+  props<{ componentSettings: Update<ComponentSettings<any>> }>()
+);
 
-export class LoadComponentSettingsFailure implements Action {
-  readonly type = ComponentSettingActionTypes.LoadComponentSettingsFailure;
-  constructor(public payload: { error: any }) { }
-}
-
-export type ComponentSettingActions = LoadComponentSettings | LoadComponentSettingsSuccess | LoadComponentSettingsFailure;
+export const updateComponentsSettings = createAction(
+  ComponentSettingActionTypes.UpdateComponentsSettings,
+  props<{ componentsSettings: Update<ComponentSettings<any>>[] }>()
+);
 

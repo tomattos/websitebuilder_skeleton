@@ -7,13 +7,30 @@
     &.mat-flat-button,
     &.mat-stroked-button {
       height: 48px;
-      width: 200px;
+      min-width: 130px;
+      padding: 0 50px;
       max-width: 100%;
+      font-size: 1rem;
+    }
+
+    &.mat-flat-button {
+      color: $primary-white;
     }
 
     .material-icons {
       font-size: 16px;
       color: inherit;
+    }
+  }
+
+  &-button-rounded.mat-icon-button {
+    width: 54px;
+    height: 54px;
+    box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.1);
+    
+    .material-icons {
+      font-size: 19px;
+      color: $secondary-gray-dark;
     }
   }
 
@@ -36,6 +53,7 @@
   /* Menu Dropdown */
   &-menu {
     &.mat-menu-panel {
+      max-width: inherit;
       padding: 32px;
       border-radius: 8px;
       box-shadow: $shadow-strong;
@@ -58,6 +76,10 @@
         color: $secondary-gray-dark;
       }
 
+      &:last-child {
+        margin-right: 0;
+      }
+
       &:first-of-type {
         margin-top: 0;
       }
@@ -74,6 +96,11 @@
           color: $primary-green;
         }
       }
+
+      &[disabled] {
+        color: $secondary-gray-dark;
+        cursor: default;
+      }
     }
   }
 
@@ -82,5 +109,96 @@
     .mat-dialog-container {
       padding: 32px 40px;
     }
+
+    &-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 60px;
+
+      button {
+        margin: 0 8px;
+      }
+    }
+  }
+
+  /* Tabs */
+  &-tabs {
+    .mat-tab-header {
+      border-bottom: 0;
+      margin-bottom: 50px;
+    }
+
+    .mat-tab-label {
+      margin: 0 40px;
+      padding: 0;
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Slide Toggle */
+  &-slide-toggle {
+    .mat-slide-toggle-content {
+      display: inline-flex;
+      align-items: center;
+
+      .material-icons {
+        margin-left: 8px;
+      }
+    }
+
+    .mat-slide-toggle-bar {
+      width: 22px;
+      height: 12px;
+    }
+
+    .mat-slide-toggle-thumb,
+    .mat-slide-toggle-thumb-container {
+      width: 8px;
+      height: 8px;
+    }
+
+    .mat-slide-toggle-thumb-container {
+      top: 2px;
+      left: 2px;
+    }
+
+    &.mat-slide-toggle.mat-checked {
+      .mat-slide-toggle-thumb {
+        background-color: $primary-white;
+      }
+
+      .mat-slide-toggle-thumb-container {
+        transform: translate3d(9px,0,0);
+      }
+
+      .mat-slide-toggle-bar {
+        background-color: $primary-green;
+      }
+    }
+
+    .mat-slide-toggle-bar {
+      background-color: $secondary-gray;
+    }
+  }
+}
+
+.pages-menu {
+  &.mat-menu-panel {
+    width: 420px;
+    max-width: 100%;
+  }
+}
+
+.presentation-variant {
+  & > * {
+    width: 1200px !important;
+    transform: scale(.6);
+    margin-left: calc((-1200px + 820px)/2 - 40px);
+    margin-bottom: -15px;
+  }
+
+  &:last-of-type > * {
+    margin-bottom: 0;
   }
 }

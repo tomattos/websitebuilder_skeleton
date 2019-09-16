@@ -1,0 +1,21 @@
+<div class="component-menu">
+  <div class="component-menu-add-button"
+       #componentMenuAddButton
+       (menuOpened)="toggleVisibleClass()"
+       (menuClosed)="toggleVisibleClass()"
+       (click)="setTargetComponentSeq()"
+       [matMenuTriggerFor]="componentsMenu"
+       [ngClass]="{ 'is-visible': isVisible }"
+       [ngStyle]="{ width: size + 'px', height: size + 'px' }"><i class="material-icons">add</i></div>
+
+  <mat-menu class="main-menu component-menu"
+            #componentsMenu="matMenu">
+    <div mat-menu-item
+         class="component-menu-item"
+         *ngFor="let componentName of componentsNamesList"
+         (click)="openChooseComponentModal(componentName)">
+      {{ componentName }}
+      <i class="material-icons">keyboard_arrow_right</i>
+    </div>
+  </mat-menu>
+</div>

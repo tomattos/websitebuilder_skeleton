@@ -1,0 +1,26 @@
+@import 'shadow.scss';
+@import 'colors.scss';
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 120px;
+  width: 100%;
+  box-shadow: $shadow;
+  background-color: $primary-white;
+
+  &.fixed {
+    position: fixed;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-menu {
+    display: flex;
+    font-size: 1rem;
+  }
+}

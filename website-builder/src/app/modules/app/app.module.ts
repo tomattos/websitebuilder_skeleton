@@ -15,6 +15,7 @@ import { reducers } from './state/reducers';
 import { LoginEffects } from '../login/state/effects/login.effects';
 import { LoginModule } from '../login/login.module';
 import { ComponentSettingsModule } from '../component-settings/component-settings.module';
+import { ComponentBuilderModule } from '../component-builder/component-builder.module';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,8 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    LoginModule,
     ComponentSettingsModule,
+    ComponentBuilderModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -34,8 +35,10 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AppEffects, LoginEffects])
+    EffectsModule.forRoot([AppEffects, LoginEffects]),
+    LoginModule
   ],
+  exports: [ComponentSettingsModule],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

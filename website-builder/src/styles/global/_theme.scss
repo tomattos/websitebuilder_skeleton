@@ -1,0 +1,111 @@
+@import '~@angular/material/theming';
+
+$mat-palette-pr: (
+  50 : #e6f8f9,
+  100 : #bfeef0,
+  200 : #95e3e7,
+  300 : #6bd7dd,
+  400 : #4bcfd5,
+  500 : #2bc6ce,
+  600 : #26c0c9,
+  700 : #20b9c2,
+  800 : #1ab1bc,
+  900 : #10a4b0,
+  A100 : #e0fcff,
+  A200 : #adf8ff,
+  A400 : #7af4ff,
+  A700 : #60f2ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+$mat-palette-ac: (
+  50 : #e7e7e7,
+  100 : #c2c2c2,
+  200 : #999999,
+  300 : #707070,
+  400 : #525252,
+  500 : #333333,
+  600 : #2e2e2e,
+  700 : #272727,
+  800 : #202020,
+  900 : #141414,
+  A100 : #ef6e6e,
+  A200 : #ea4040,
+  A400 : #f60000,
+  A700 : #dd0000,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+$mat-palette-wa: (
+  50 : #fee0e0,
+  100 : #fcb3b3,
+  200 : #fb8080,
+  300 : #f94d4d,
+  400 : #f72626,
+  500 : #f60000,
+  600 : #f50000,
+  700 : #f30000,
+  800 : #f20000,
+  900 : #ef0000,
+  A100 : #ffffff,
+  A200 : #ffe3e3,
+  A400 : #ffb0b0,
+  A700 : #ff9696,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$my-theme-primary: mat-palette($mat-palette-pr);
+$my-theme-accent: mat-palette($mat-palette-ac);
+$my-theme-warn: mat-palette($mat-palette-wa);
+$my-theme: mat-light-theme(
+    $my-theme-primary,
+    $my-theme-accent,
+    $my-theme-warn
+);
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Avenir, Apercu, sans-serif'
+);

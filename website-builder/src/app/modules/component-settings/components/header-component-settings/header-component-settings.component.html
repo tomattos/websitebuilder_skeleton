@@ -1,0 +1,5 @@
+<wb-slide-toggle-with-screen [name]="'Logo'"
+                             (updateVisibilitySettingEvent)="onUpdateSettings($event, 'logo.config.imgAlt')"
+                             [isVisible]="settings?.currentState.logo.config.isVisible">
+  <wb-logo-setting [selfSetting]="settings?.currentState.logo"></wb-logo-setting>
+</wb-slide-toggle-with-screen>

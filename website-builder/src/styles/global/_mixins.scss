@@ -1,0 +1,10 @@
+@mixin visibility_hide_animation {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s;
+}
+
+@mixin visibility_show_animation {
+  opacity: 1;
+  visibility: visible;
+}

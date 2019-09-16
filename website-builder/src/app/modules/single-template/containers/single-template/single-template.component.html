@@ -1,0 +1,34 @@
+<div class="template">
+  <!-- Header -->
+  <header class="template-header">
+    <div class="template-logo" routerLink="/sites">
+      <i class="material-icons">picture_in_picture</i>
+      <span>My sites</span>
+    </div>
+
+    <div class="template-navigation">
+      <wb-pages-menu class="template-navigation-item"></wb-pages-menu>
+      <a class="template-navigation-item" (click)="openGeneralSettingsModal()">Settings</a>
+    </div>
+
+    <button
+      mat-flat-button
+      color="primary"
+      class="main-button">Publish</button>
+  </header>
+
+
+  <!-- Builder Content -->
+  <div class="template-builder">
+
+    <!-- Building components block -->
+    <ng-template wbBuilderHost>
+    </ng-template>
+
+    <!-- Will display empty add component block if total$ count of components is 0 -->
+    <div class="template-empty-add" *ngIf="!(total$ | async)">
+      <h2 class="template-empty-add-title">Great, now is the time to add something to your page</h2>
+      <wb-components-menu></wb-components-menu>
+    </div>
+  </div>
+</div>
