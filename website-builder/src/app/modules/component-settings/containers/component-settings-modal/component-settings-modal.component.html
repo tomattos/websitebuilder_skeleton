@@ -1,0 +1,33 @@
+<div class="component-settings">
+  <button mat-icon-button
+          class="main-button-rounded component-settings-edit-btn"
+          (menuOpened)="saveComponentPrevStateSetting()"
+          [matMenuTriggerFor]="settingsModal">
+    <i class="material-icons">edit</i>
+  </button>
+
+  <mat-menu #settingsModal="matMenu"
+            class="main-menu"
+            [hasBackdrop]="false"
+            (closed)="resetModalSettings()">
+    <div class="component-settings-body">
+      <h5 class="component-settings-title">{{settings.settingsTitle}}</h5>
+
+      <!-- Settings for target component -->
+      <div class="component-settings-wrapper">
+        <ng-container wbComponentSettingsHost></ng-container>
+      </div>
+    </div>
+
+    <div class="component-settings-controls">
+      <button class="main-button"
+              color="secondary"
+              mat-flat-button
+              (click)="resetComponentCurrentStateToPrevState()">Cancel</button>
+
+      <button class="main-button"
+              color="primary"
+              mat-flat-button>Save</button>
+    </div>
+  </mat-menu>
+</div>

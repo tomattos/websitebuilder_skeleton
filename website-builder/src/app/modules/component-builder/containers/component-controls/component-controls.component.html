@@ -1,0 +1,16 @@
+<div class="component-controls">
+  <wb-component-settings-modal class="component-controls-settings-modal"
+                               [settings]="innerComponentSettings"></wb-component-settings-modal>
+
+  <!-- Place for component render -->
+  <ng-template wbComponentControlsHost class="component-controls-init-component"></ng-template>
+
+  <!-- Add new component -->
+  <wb-components-menu class="component-controls-components-menu"
+                      [targetComponentSeq]="innerComponentSettings.seq"
+                      [size]="50"></wb-components-menu>
+
+  <!-- Manipulation controls -->
+  <wb-manipulation-controls class="component-controls-manipulation"
+                            [componentId]="innerComponentSettings.id"></wb-manipulation-controls>
+</div>

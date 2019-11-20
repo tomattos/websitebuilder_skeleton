@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatButtonModule,
   MatCheckboxModule,
   MatFormFieldModule,
@@ -7,7 +9,11 @@ import {
   MatInputModule,
   MatMenuModule,
   MatDialogModule,
-  MatSelectModule, MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS
+  MatSelectModule,
+  MatDialogConfig,
+  MatTabsModule,
+  MatSlideToggleModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 const modules = [
@@ -18,7 +24,10 @@ const modules = [
   MatCheckboxModule,
   MatMenuModule,
   MatDialogModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule,
+  MatSlideToggleModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -28,6 +37,12 @@ const modules = [
   ],
   exports: [...modules],
   providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 2000
+      }
+    },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {

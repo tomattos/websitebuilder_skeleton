@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as fromSitesStore from '../../state/reducers/sites.reducer';
+import * as fromSitesStore from '../../store/reducers/sites.reducer';
 import { SitesFacade } from '../../sites.facade';
 import { Observable } from 'rxjs';
 import { Site } from '../../interfaces/site.interface';

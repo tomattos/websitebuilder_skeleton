@@ -1,0 +1,76 @@
+@import 'colors.scss';
+
+.image-uploader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 180px;
+  margin: auto;
+  border-radius: 4px;
+  background-color: #f5f8fa;
+
+  &-link,
+  &-remove {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 24px;
+
+   .material-icons {
+     color: $secondary-gray;
+   }
+  }
+
+  &-src {
+    display: flex;
+    align-items: center;
+    height: 80%;
+    cursor: pointer;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  &-remove {
+    top: 10px;
+  }
+
+  &-dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    border: 2px dashed $secondary-gray;
+    transition: .3s;
+
+    .material-icons {
+      margin-top: 20%;
+      font-size: 120px;
+      color: $secondary-gray;
+    }
+
+    &.highlight {
+      box-shadow: 0 0 18px 0 rgba(0, 0, 0, .2);
+    }
+  }
+
+  &-dialog-name {
+    margin-top: 70px;
+    color: $secondary-gray;
+  }
+
+  &-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+}

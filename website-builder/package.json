@@ -26,11 +26,14 @@
     "@ngrx/schematics": "^8.2.0",
     "@ngrx/store": "^8.2.0",
     "@ngrx/store-devtools": "^8.2.0",
+    "deep-unfreeze": "^0.1.1",
     "hammerjs": "^2.0.8",
     "immutable": "^4.0.0-rc.12",
+    "lodash.set": "^4.3.2",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
+    "uuid": "^3.3.3",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -52,6 +55,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
+    "tslint-config-airbnb": "^5.11.1",
     "typescript": "~3.4.3"
   }
 }

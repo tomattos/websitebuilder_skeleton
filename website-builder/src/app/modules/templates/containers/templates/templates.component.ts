@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../state/reducers/templates.reducer';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromStore from '../../store/reducers';
+import { of } from 'rxjs';
 import { Template } from '../../interfaces/template.interface';
 import { TemplatesFacade } from '../../templates.facade';
-import { Company } from '../../interfaces/company.interface';
-import { take } from 'rxjs/operators';
+import { ComponentBuilderFacade } from '../../../component-builder/component-builder.facade';
+import { HeaderComponent } from '../../../component-builder/components/header/header.component';
+import { HeaderFirstComponent } from '../../../component-builder/components/header/component-variants/header-first/header-first.component';
 
 @Component({
   selector: 'wb-templates',
@@ -13,7 +14,6 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit {
-  companies: Company[];
   // Todo: replace temporary mock with backend data
   templates$ = of([
     {
@@ -25,20 +25,14 @@ export class TemplatesComponent implements OnInit {
   constructor(
     private templatesFacade: TemplatesFacade,
     private store: Store<fromStore.State>
-  ) {
-    this.store.pipe(select(fromStore.selectAllCompanies))
-      .pipe(take(1))
-      .subscribe((companies: Company[]) => {
-        this.companies = companies;
-      });
-  }
+  ) {}
 
   ngOnInit() {
     this.templatesFacade.getCompanies();
   }
 
   openChooseCompanyModal() {
-    this.templatesFacade.openChooseCompanyModal(this.companies);
+    this.templatesFacade.openChooseCompanyModal();
   }
 
   /*

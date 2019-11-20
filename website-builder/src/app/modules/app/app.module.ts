@@ -6,15 +6,18 @@ import { AppComponent } from './containers/app.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './state/app.effects';
+import { AppEffects } from './store/app.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from '../../libs/http';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './state/reducers';
-import { LoginEffects } from '../login/state/effects/login.effects';
+import { reducers } from './store/reducers';
+import { LoginEffects } from '../login/store/effects/login.effects';
 import { LoginModule } from '../login/login.module';
 import { ComponentSettingsModule } from '../component-settings/component-settings.module';
+import { ComponentBuilderModule } from '../component-builder/component-builder.module';
+import { FormCreatorFacade } from '../../libs/form-creator/form-creator.facade.service';
+import { SiteSettingsModule } from '../site-settings/site-settings.module';
 
 @NgModule({
   declarations: [
@@ -25,8 +28,9 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    LoginModule,
     ComponentSettingsModule,
+    SiteSettingsModule,
+    ComponentBuilderModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -34,9 +38,11 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AppEffects, LoginEffects])
+    EffectsModule.forRoot([AppEffects, LoginEffects]),
+    LoginModule
   ],
-  providers: [httpInterceptorProviders],
+  exports: [ComponentSettingsModule],
+  providers: [httpInterceptorProviders, FormCreatorFacade],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

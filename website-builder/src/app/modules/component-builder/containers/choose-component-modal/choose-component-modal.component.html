@@ -1,0 +1,13 @@
+<div class="choose-component-modal">
+  <!-- Modal navigation -->
+  <div class="choose-component-modal-navigation" mat-dialog-title>
+    <a (click)="back()"><i class="material-icons">arrow_back</i></a>
+
+    <h5>{{ data.componentType }}</h5>
+
+    <a (click)="closeModal()"><i class="material-icons">close</i></a>
+  </div>
+
+  <ng-template wbSelectComponentHost>
+  </ng-template>
+</div>

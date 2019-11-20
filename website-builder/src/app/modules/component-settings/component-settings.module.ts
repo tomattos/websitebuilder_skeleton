@@ -2,20 +2,42 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentSettingsFacade } from './component-settings.facade';
 import { ComponentSettingsApi } from './api/component-settings.api';
-import { StoreModule } from '@ngrx/store';
-import * as fromComponentSetting from './state/reducers/component-setting.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { ComponentSettingEffects } from './state/effects/component-setting.effects';
-
-
+import { ComponentSettingEffects } from './store/effects/component-setting.effects';
+import { HeaderComponentSettingsComponent } from './components/header-component-settings/header-component-settings.component';
+import { ComponentSettingsModalComponent } from './containers/component-settings-modal/component-settings-modal.component';
+import { MaterialModule } from '../../libs/material/material.module';
+import { ComponentSettingsHostDirective } from './directives/component-settings-host.directive';
+import { ComponentSettingsComponent } from './components/component-settings/component-settings.component';
+import { LogoSettingComponent } from './components/single/logo-setting/logo-setting.component';
+import { ButtonSettingComponent } from './components/single/button-setting/button-setting.component';
+import { UtilsComponentsModule } from '../../libs/utils-components/utils-components.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ComponentSettingsModalComponent,
+    HeaderComponentSettingsComponent,
+    ComponentSettingsHostDirective,
+    ComponentSettingsComponent,
+    LogoSettingComponent,
+    ButtonSettingComponent,
+  ],
   imports: [
     CommonModule,
-    StoreModule.forFeature(fromComponentSetting.componentSettingFeatureKey, fromComponentSetting.reducer),
+    MaterialModule,
     EffectsModule.forFeature([ComponentSettingEffects]),
+    UtilsComponentsModule
   ],
-  providers: [ComponentSettingsFacade, ComponentSettingsApi]
+  providers: [
+    ComponentSettingsFacade,
+    ComponentSettingsApi
+  ],
+  exports: [
+    ComponentSettingsModalComponent,
+  ],
+  entryComponents: [
+    ComponentSettingsModalComponent,
+    HeaderComponentSettingsComponent
+  ]
 })
 export class ComponentSettingsModule { }

@@ -1,3 +1,4 @@
+@import 'colors.scss';
 
 html {
   font-size: 16px;
@@ -38,12 +39,12 @@ h4 {
 }
 
 h5 {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: normal;
 }
 
 h6 {
-  font-size: .875rem;
+  font-size: 1rem;
   font-weight: normal;
 }
 
@@ -57,4 +58,9 @@ small {
 
 a {
   cursor: pointer;
+
+  &:disabled {
+    color: $secondary-gray-dark;
+    cursor: default;
+  }
 }

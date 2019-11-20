@@ -1,0 +1,30 @@
+<div class="header-component-settings">
+  <!-- logo setting -->
+  <wb-slide-toggle-with-screen name="Logo"
+                               [settingType]="settings?.currentState.logo.type"
+                               [currentSlideToggleSetting]="currentSlideToggleSetting"
+                               [innerSettingType]="settings?.currentState.logo.slideToggleInnerSettingType"
+                               (updateVisibilitySettingEvent)="onUpdateSettings($event, 'logo.config.isVisible')"
+                               (updateSlideToggleSettingEvent)="onUpdateOpenedSlideToggleSetting($event)"
+                               [isVisible]="settings?.currentState.logo.config.isVisible">
+    <wb-logo-setting [selfSetting]="settings?.currentState.logo"
+                     (uploadEvent)="onUpdateSettings($event, 'logo.config.imgSrc')"></wb-logo-setting>
+  </wb-slide-toggle-with-screen>
+
+  <!-- menu setting -->
+<!--  <wb-slide-toggle-with-screen name="Menu"></wb-slide-toggle-with-screen>-->
+
+  <!-- button setting -->
+  <wb-slide-toggle-with-screen name="Button"
+                               [settingType]="settings?.currentState.button.type"
+                               [currentSlideToggleSetting]="currentSlideToggleSetting"
+                               [innerSettingType]="settings?.currentState.button.slideToggleInnerSettingType"
+                               (updateSlideToggleSettingEvent)="onUpdateOpenedSlideToggleSetting($event)"
+                               (updateVisibilitySettingEvent)="onUpdateSettings($event, 'button.config.isVisible')"
+                               [isVisible]="settings?.currentState.button.config.isVisible">
+    <wb-button-setting></wb-button-setting>
+  </wb-slide-toggle-with-screen>
+
+  <!-- social setting -->
+<!--  <wb-slide-toggle-with-screen name="Social"></wb-slide-toggle-with-screen>-->
+</div>

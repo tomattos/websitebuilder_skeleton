@@ -1,0 +1,17 @@
+<div class="slide-toggle-with-screen"
+     (click)="$event.stopPropagation()">
+  <div class="slide-toggle-with-screen-control">
+    <mat-slide-toggle class="main-slide-toggle"
+                      (change)="onUpdateVisibilitySetting($event)"
+                      [checked]="isVisible">{{name}}</mat-slide-toggle>
+
+    <a class="slide-toggle-with-screen-arrow"
+       (click)="onUpdateSlideToggleSetting()"><i class="material-icons">keyboard_arrow_right</i></a>
+  </div>
+
+  <!-- Screen for this setting -->
+  <div class="slide-toggle-with-screen-inner-screen"
+       [ngClass]="currentSlideToggleSetting !== null && 'is-' + currentSlideToggleSetting | lowercase">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LoginRequest } from './interfaces/login-request.interface';
-import { LoadLogin } from './state/actions/login.actions';
+import { LoadLogin } from './store/actions/login.actions';
 
 @Injectable()
 export class LoginFacade {

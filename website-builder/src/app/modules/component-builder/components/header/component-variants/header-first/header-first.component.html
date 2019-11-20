@@ -1,0 +1,27 @@
+<header class="header"
+        [ngClass]="{ 'fixed': settings.pin.config.isFixed }">
+  <div class="container header-container">
+    <!-- Logo -->
+    <a class="header-logo"
+       *ngIf="settings.logo.config.isVisible"
+       [href]="settings.logo.config.imgLink">
+      <img [src]="settings.logo.config.imgSrc"
+           [alt]="settings.logo.config.imgAlt">
+    </a>
+
+    <!-- Menu -->
+    <nav class="header-menu">
+      <div>Home</div>
+      <div>About</div>
+    </nav>
+
+    <!-- Button -->
+    <ng-container *ngIf="settings.button.config.isVisible">
+      <a
+        *ngFor="let button of settings.button.config.buttons"
+        type="button"
+        [href]="button.buttonLink"
+        class="header-button">{{button.buttonText}}</a>
+    </ng-container>
+  </div>
+</header>

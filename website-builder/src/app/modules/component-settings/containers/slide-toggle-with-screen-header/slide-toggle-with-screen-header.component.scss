@@ -1,0 +1,12 @@
+.slide-toggle-with-screen-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  &-title {
+    flex: 1;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+  }
+}

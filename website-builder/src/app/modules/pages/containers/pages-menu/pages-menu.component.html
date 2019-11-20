@@ -1,0 +1,20 @@
+<a class="template-navigation-item"
+   *ngIf="currentPage$ | async"
+   [matMenuTriggerFor]="pagesMenu">{{ (currentPage$ | async).pageName }}</a>
+<mat-menu class="main-menu pages-menu"
+          #pagesMenu="matMenu">
+
+  <a *ngFor="let page of pages$ | async"
+     mat-menu-item
+     class="pages-menu-item"
+     [disabled]="isCurrent(page.id) | async"
+     (click)="changeCurrentPage(page.id)">{{ page.pageName }}</a>
+
+  <hr>
+
+  <!-- Create new page -->
+  <a mat-menu-item
+     (click)="openCreatePageModal()">
+    <i class="material-icons">add_circle_outline</i>Add page
+  </a>
+</mat-menu>

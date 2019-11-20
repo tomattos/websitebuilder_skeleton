@@ -1,0 +1,10 @@
+.create-page-modal {
+  &-form {
+    display: flex;
+    flex-direction: column;
+
+    .main-form-field {
+      margin-bottom: 30px;
+    }
+  }
+}

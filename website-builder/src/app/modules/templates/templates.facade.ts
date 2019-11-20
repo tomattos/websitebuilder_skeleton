@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ChooseCompanyModalComponent } from './components/choose-company-modal/choose-company-modal.component';
 import { Company } from './interfaces/company.interface';
-import { Store } from '@ngrx/store';
-import * as fromStore from './state/reducers/templates.reducer';
-import { LoadCompanies, LoadTemplates } from './state/actions/templates.actions';
+import { select, Store } from '@ngrx/store';
+import * as fromStore from './store/reducers';
+import { LoadTemplates } from './store/actions/templates.actions';
+import { LoadCompanies } from './store/actions/companies.action';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable()
 export class TemplatesFacade {
+  companiesSubscription: Subscription;
+  dialogRef: MatDialogRef<ChooseCompanyModalComponent>;
+
   constructor(
     private store: Store<fromStore.State>,
     public dialog: MatDialog
@@ -21,14 +26,16 @@ export class TemplatesFacade {
     this.store.dispatch(new LoadCompanies());
   }
 
-  openChooseCompanyModal(companies: Company[]): void {
-    const dialogRef = this.dialog.open(ChooseCompanyModalComponent, {
-      width: '500px',
-      data: companies
+  openChooseCompanyModal(): void {
+    this.companiesSubscription = this.store.pipe(select(fromStore.selectAllCompanies)).subscribe((res: Company[]) => {
+      this.dialogRef = this.dialog.open(ChooseCompanyModalComponent, {
+        width: '500px',
+        data: res
+      });
     });
 
-    dialogRef.afterClosed().subscribe((company: Company) => {
-      console.log(company);
+    this.dialogRef.afterClosed().subscribe((company: Company) => {
+      this.companiesSubscription.unsubscribe();
     });
   }
 }

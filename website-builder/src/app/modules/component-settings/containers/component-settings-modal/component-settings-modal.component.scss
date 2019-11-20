@@ -1,0 +1,25 @@
+.component-settings {
+  &-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 540px;
+    overflow: hidden;
+  }
+
+  &-wrapper {
+    flex: 1;
+    width: 340px;
+  }
+
+  &-title {
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  &-controls {
+    button {
+      margin: 5px;
+    }
+  }
+}
