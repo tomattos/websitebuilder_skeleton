@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromStore from '../../state/reducers';
+import * as fromStore from '../../store/reducers';
 import { of } from 'rxjs';
 import { Template } from '../../interfaces/template.interface';
 import { TemplatesFacade } from '../../templates.facade';
@@ -23,7 +23,6 @@ export class TemplatesComponent implements OnInit {
   ]);
 
   constructor(
-    private buildingComponentsFacade: ComponentBuilderFacade,
     private templatesFacade: TemplatesFacade,
     private store: Store<fromStore.State>
   ) {}

@@ -13,6 +13,9 @@ import { ComponentControlsComponent } from './containers/component-controls/comp
 import { ComponentControlsHostDirective } from './directives/component-controls-host.directive';
 import { HeaderSecondComponent } from './components/header/component-variants/header-second/header-second.component';
 import { ComponentSettingsModule } from '../component-settings/component-settings.module';
+import { EffectsModule } from '@ngrx/effects';
+import { ComponentBuilderEffects } from './store/effects/component-builder.effects';
+import { ManipulationControlsComponent } from './containers/manipulation-controls/manipulation-controls.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
     ChooseComponentModalComponent,
     SelectComponentHostDirective,
     ComponentControlsComponent,
-    ComponentControlsHostDirective
+    ComponentControlsHostDirective,
+    ManipulationControlsComponent
   ],
   exports: [
     HeaderComponent,
@@ -36,7 +40,8 @@ import { ComponentSettingsModule } from '../component-settings/component-setting
     PagesModule,
     DialogModule,
     MaterialModule,
-    ComponentSettingsModule
+    ComponentSettingsModule,
+    EffectsModule.forFeature([ComponentBuilderEffects])
   ],
   providers: [ComponentBuilderFacade],
   entryComponents: [

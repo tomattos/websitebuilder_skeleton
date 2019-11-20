@@ -6,7 +6,9 @@ import { BuilderHostDirective } from '../../directives/builder-host.directive';
 import { ComponentType } from '../../../component-builder/constants/component-type.enum';
 
 import { ComponentBuilderFacade } from '../../../component-builder/component-builder.facade';
-import { GeneralSettingsFacade } from '../../../general-settings/general-settings.facade';
+import { SiteSettingsFacade } from '../../../site-settings/site-settings.facade';
+import { SiteSettingsModalComponent } from '../../../site-settings/containers/site-settings-modal/site-settings-modal.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'wb-single-template',
@@ -19,7 +21,7 @@ export class SingleTemplateComponent implements OnInit {
 
   constructor(
     private componentBuilderFacade: ComponentBuilderFacade,
-    private generalSettingsFacade: GeneralSettingsFacade
+    private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -30,6 +32,11 @@ export class SingleTemplateComponent implements OnInit {
   }
 
   openGeneralSettingsModal() {
-    this.generalSettingsFacade.openGeneralSettingsModal();
+    this.dialog.open(SiteSettingsModalComponent, {
+      width: '820px',
+      position: {
+        top: '20px'
+      }
+    });
   }
 }

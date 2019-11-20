@@ -1,40 +1,50 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { ActionsSubject, select, Store } from '@ngrx/store';
+import { fromEvent, Observable, Subject } from 'rxjs';
+import { filter, first, map, mergeMap, take, takeUntil, tap } from 'rxjs/operators';
 import * as uuid from 'uuid';
-import * as fromApplicationStore from '../../modules/app/state/reducers/index';
-import { addComponent } from './state/actions/component-builder.actions';
+import * as fromApplicationStore from '../app/store/reducers/index';
+import { addComponentSettings } from '../component-settings/store/actions/component-setting.actions';
+import {
+  addComponent,
+  AIRemovePageComponents,
+  ComponentBuilderActionTypes,
+  removeSingleComponentProcess
+} from './store/actions/component-builder.actions';
+import { PagesActionsTypes } from '../pages/store/actions/pages.actions';
+import { BuildForType } from './constants/build-for.type';
 import { ComponentType } from './constants/component-type.enum';
-import { HeaderFirstComponent } from './components/header/component-variants/header-first/header-first.component';
-import { ComponentSettings } from '../component-settings/interfaces/component-settings.interface';
-import { HeaderComponentSettingsModel } from '../component-settings/models/header-component-settings.model';
-import { addComponentSettings } from '../component-settings/state/actions/component-setting.actions';
-import { forkJoin, fromEvent, Observable, Subject } from 'rxjs';
-import { first, flatMap, map, mergeMap, take, takeUntil } from 'rxjs/operators';
-import { ComponentSchema } from './interfaces/component-schema.interface';
 import { ComponentSchemaModel } from './models/component-schema.model';
+import { ComponentSettings } from '../component-settings/interfaces/component-settings.interface';
+import { ComponentSchema } from './interfaces/component-schema.interface';
 import { FactorySettings } from '../app/interfaces/factory-settings.interface';
 import { ComponentSchemaSettings } from '../app/interfaces/component-settings.interface';
-import { PagesFacade } from '../pages/pages.facade';
 import { HeaderComponent } from './components/header/header.component';
-import { ComponentSettingsFacade } from '../component-settings/component-settings.facade';
-import { SettingTypes } from '../component-settings/interfaces/single-setting/setting-types';
-import { BuildForType } from './constants/build-for.type';
 import { ComponentControlsComponent } from './containers/component-controls/component-controls.component';
+import { PagesFacade } from '../pages/pages.facade';
+import { ComponentSettingsFacade } from '../component-settings/component-settings.facade';
 import { SingleTemplateFacade } from '../single-template/single-template.facade';
-import { HeaderSecondComponent } from './components/header/component-variants/header-second/header-second.component';
 import { Headers } from './constants/headers';
+import { selectSeq } from '../component-settings/store/reducers/component-settings.reducer';
 
 @Injectable()
 export class ComponentBuilderFacade {
   static defaultBuildContainer;
+  private removePageComponentsDispatcher$: Observable<any>;
 
   constructor(
     private cfr: ComponentFactoryResolver,
     private store: Store<fromApplicationStore.State>,
     private pagesFacade: PagesFacade,
     private singleTemplateFacade: SingleTemplateFacade,
-    private componentSettingsFacade: ComponentSettingsFacade
-  ) {}
+    private componentSettingsFacade: ComponentSettingsFacade,
+    private dispatcher$: ActionsSubject
+  ) {
+    /* Each time when we emmit action for changing the page, new components rebuild */
+    dispatcher$
+      .pipe(filter(action => action.type === PagesActionsTypes.ChangeCurrentPage))
+      .subscribe(() => this.build());
+  }
 
   /*
   * getComponents method gives a component class instance,
@@ -56,7 +66,7 @@ export class ComponentBuilderFacade {
   }
 
   /*
-  * build method takes components by current page and settings state
+  * build method takes components by current page and settings store
   * and generate initial build if it not empty
   * */
   public async build(buildContainer = ComponentBuilderFacade.defaultBuildContainer,
@@ -65,29 +75,31 @@ export class ComponentBuilderFacade {
     const ifPagesExist = await this.pagesFacade.ifPagesExist();
 
     if (!ifPagesExist) {
-      this.pagesFacade.createPage();
+      await this.pagesFacade.createPage();
     }
 
-    this.getComponentsWithSettings$
+    const factoriesAndSettings: FactorySettings[] = await this.getComponentsWithSettings$
       .pipe(
         take(1),
         map((componentWithSettings): FactorySettings[] =>
           componentWithSettings
-            .map(({ componentSchema, componentSettings }): FactorySettings => ({
-              componentSettings,
-              factory: this.createComponentFactory(componentSchema) as ComponentFactory<any>
-            }))
+            .map(
+              ({ componentSchema, componentSettings }): FactorySettings => ({
+                componentSettings,
+                factory: this.createComponentFactory(componentSchema) as ComponentFactory<any>
+              })
+            )
         )
       )
-      .subscribe((factoriesAndSettings: FactorySettings[]) => {
-        this.clearBuilderContainer(buildContainer);
+      .toPromise();
 
-        factoriesAndSettings.forEach((factoryAndSettings) => {
-          buildFor === 'site'
-            ? this.applyComponent(factoryAndSettings)
-            : this.applyComponentWithControls(factoryAndSettings);
-        });
-      });
+    this.clearBuilderContainer(buildContainer);
+
+    factoriesAndSettings.forEach((factoryAndSettings) => {
+      buildFor === 'site'
+        ? this.appendComponent(factoryAndSettings)
+        : this.appendComponentWithControls(factoryAndSettings);
+    });
   }
 
   /*
@@ -109,7 +121,7 @@ export class ComponentBuilderFacade {
     });
 
     factories.forEach(async (factory: ComponentFactory<any>) => {
-      const componentRef = await this.applyComponent({ factory, componentSettings }, buildContainer);
+      const componentRef = await this.appendComponent({ factory, componentSettings }, buildContainer);
       const nativeElement = componentRef.location.nativeElement;
       const componentVersion = componentRef.instance.componentVersion;
       const targetSeq = await this.singleTemplateFacade.getTargetComponentSeq();
@@ -124,27 +136,29 @@ export class ComponentBuilderFacade {
       * */
       fromEvent(nativeElement.children[0], 'click')
         .pipe(takeUntil(emitCloseModal))
-        .subscribe(async () => {
-          /*
-          * After adding new component we need to update sequence of all components next to already created
-          * */
-          await this.componentSettingsFacade.updateComponentSeqSettings(targetSeq);
+        .subscribe(
+          async () => {
+            /*
+            * After adding new component we need to update sequence of all components next to already created
+            * */
+            await this.componentSettingsFacade.updateComponentSeqSettings(targetSeq);
 
-          this.addComponent(
-            {
-              componentVersion,
-              componentType: componentSchema.componentType
-            },
-            newSeq
-          );
+            this.addComponent(
+              {
+                componentVersion,
+                componentType: componentSchema.componentType
+              },
+              newSeq
+            );
 
-          /*
-          * "callback" will close modal,
-          * and after emitCloseModal Subject gives to all subscriptions information about unsubscribe
-          * */
-          callback();
-          emitCloseModal.complete();
-        });
+            /*
+            * "callback" will close modal,
+            * and after emitCloseModal Subject gives to all subscriptions information about unsubscribe
+            * */
+            callback();
+            emitCloseModal.complete();
+          }
+        );
     });
   }
 
@@ -170,13 +184,14 @@ export class ComponentBuilderFacade {
     * Return already created component
     * and settings for it
     * */
-    this.store.pipe(select(fromApplicationStore.selectLastCreatedComponentWithSettings, { id }))
+    this.store.pipe(
+      select(fromApplicationStore.selectLastCreatedComponentWithSettings, { id }))
       .pipe(
         take(1),
         mergeMap(
           async (schemaSettings: ComponentSchemaSettings) => {
             const factory = this.createComponentFactory(schemaSettings.componentSchema) as ComponentFactory<any>;
-            const componentRef = await this.applyComponentWithControls(
+            const componentRef = await this.appendComponentWithControls(
               {
                 factory,
                 componentSettings: schemaSettings.componentSettings
@@ -189,11 +204,13 @@ export class ComponentBuilderFacade {
             * updating this particular settings in store for updating component @Input: settings
             * */
             return this.componentSettingsFacade.getSettingById(schemaSettings.componentSettings.id)
-            // Todo: unsubscribe from store after component will be removed
               .pipe(
-                map((componentSettings: ComponentSettings<any>) => {
-                  componentRef.instance.settings = componentSettings.currentState;
-                })
+                takeUntil(this.removePageComponentsDispatcher$),
+                map(
+                  (componentSettings: ComponentSettings<any>) => {
+                    componentRef.instance.settings = componentSettings.currentState;
+                  }
+                )
               );
           }
         )
@@ -219,13 +236,13 @@ export class ComponentBuilderFacade {
   }
 
   /*
-  * applyComponent method universally,
-  * it can apply components to local viewContainerRef (which initialize in OnInit hook for main building)
+  * appendComponent method universally,
+  * it can append components to local viewContainerRef (which initialize in OnInit hook for main building)
   * or you can path your own viewContainerRef through the method property,
   * for example: For choose-component-modal.component.ts, for building list of available component's variants
   * */
-  async applyComponent(factoryAndSettings: FactorySettings,
-                       buildContainer = ComponentBuilderFacade.defaultBuildContainer): Promise<ComponentRef<any>> {
+  async appendComponent(factoryAndSettings: FactorySettings,
+                        buildContainer = ComponentBuilderFacade.defaultBuildContainer): Promise<ComponentRef<any>> {
     return new Promise((resolve) => {
       const componentRef = buildContainer.viewContainerRef.createComponent(factoryAndSettings.factory);
 
@@ -236,22 +253,32 @@ export class ComponentBuilderFacade {
     });
   }
 
-  async applyComponentWithControls(factoryAndSettings: FactorySettings,
-                                   buildContainer = ComponentBuilderFacade.defaultBuildContainer): Promise<ComponentRef<any>> {
+  async appendComponentWithControls(factoryAndSettings: FactorySettings,
+                                    buildContainer = ComponentBuilderFacade.defaultBuildContainer): Promise<ComponentRef<any>> {
+    const { id: componentSettingId, seq } = factoryAndSettings.componentSettings;
     const controlsComponentFactory = this.cfr.resolveComponentFactory(ComponentControlsComponent);
-    const controlsComponentRef = buildContainer.viewContainerRef.createComponent(
-      controlsComponentFactory,
-      factoryAndSettings.componentSettings.seq
-    );
-    const innerComponentRef = await this.applyComponent(
-      factoryAndSettings,
-      controlsComponentRef.instance.getComponentControlsHost
+    const controlsComponentRef = buildContainer.viewContainerRef.createComponent(controlsComponentFactory, seq);
+    const innerComponentRef = await this.appendComponent(factoryAndSettings, controlsComponentRef.instance.getComponentControlsHost);
+
+    /*
+    * After emitting ComponentBuilderActionTypes.RemovePageComponents action,
+    * all related to this action subscription will be unsubscribe
+    * */
+    this.removePageComponentsDispatcher$ = this.dispatcher$.pipe(
+      filter(action => action.type === ComponentBuilderActionTypes.RemovePageComponents),
+      map((action: AIRemovePageComponents) => action.ids),
+      filter((ids: string[]) => ids.includes(componentSettingId)),
+      tap(() => buildContainer.viewContainerRef.detach(seq))
     );
 
-    this.componentSettingsFacade.getSettingById(factoryAndSettings.componentSettings.id)
-      .subscribe((componentSettings: ComponentSettings<any>) => {
-        controlsComponentRef.instance.innerComponentSettings = componentSettings;
-      });
+    this.componentSettingsFacade.getSettingById(componentSettingId)
+      .pipe(takeUntil(this.removePageComponentsDispatcher$))
+      .subscribe(
+        (componentSettings: ComponentSettings<any>) => {
+          innerComponentRef.instance.settings = componentSettings.currentState;
+          controlsComponentRef.instance.innerComponentSettings = componentSettings;
+        }
+      );
 
     return innerComponentRef;
   }
@@ -274,5 +301,15 @@ export class ComponentBuilderFacade {
 
   get getComponentsTotalAmount$(): Observable<number> {
     return this.store.pipe(select(fromApplicationStore.selectComponentsTotalAmountByCurrentPage));
+  }
+
+  /*
+  * Remove component from the store, from view layer
+  * */
+  async removeSingle(id: string) {
+    const seq: number = await this.store.pipe(select(selectSeq)).pipe(first()).toPromise();
+
+    this.store.dispatch(removeSingleComponentProcess({ id }));
+    ComponentBuilderFacade.defaultBuildContainer.viewContainerRef.detach(seq);
   }
 }

@@ -5,6 +5,8 @@ import { PagesMenuComponent } from './containers/pages-menu/pages-menu.component
 import { MaterialModule } from '../../libs/material/material.module';
 import { CreatePageModalComponent } from './containers/create-page-modal/create-page-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { PagesEffects } from './store/effects/pages.effects';
 
 
 
@@ -13,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EffectsModule.forFeature([PagesEffects])
   ],
   exports: [
     PagesMenuComponent

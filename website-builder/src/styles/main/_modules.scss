@@ -17,6 +17,10 @@
       color: $primary-white;
     }
 
+    &.mat-secondary {
+      color: $primary-gray;
+    }
+
     .material-icons {
       font-size: 16px;
       color: inherit;
@@ -43,6 +47,12 @@
       padding: 0 20px;
       border-radius: 4px 4px 0 0;
       background-color: $secondary-gray-lighter-2;
+    }
+
+    &.small {
+      .mat-form-field-flex {
+        height: 37px;
+      }
     }
 
     .mat-form-field-infix {

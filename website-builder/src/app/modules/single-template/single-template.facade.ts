@@ -2,8 +2,8 @@ import {
   Injectable,
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as fromSingleTemplateStore from './state/reducers/single-template.reducer';
-import * as fromSingleTemplateActions from './state/actions/single-template.actions';
+import * as fromSingleTemplateStore from './store/reducers/single-template.reducer';
+import * as fromSingleTemplateActions from './store/actions/single-template.actions';
 import { take } from 'rxjs/operators';
 
 @Injectable()

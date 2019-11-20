@@ -3,9 +3,9 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ChooseCompanyModalComponent } from './components/choose-company-modal/choose-company-modal.component';
 import { Company } from './interfaces/company.interface';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from './state/reducers';
-import { LoadTemplates } from './state/actions/templates.actions';
-import { LoadCompanies } from './state/actions/companies.action';
+import * as fromStore from './store/reducers';
+import { LoadTemplates } from './store/actions/templates.actions';
+import { LoadCompanies } from './store/actions/companies.action';
 import { Observable, Subscription } from 'rxjs';
 
 @Injectable()
@@ -35,7 +35,6 @@ export class TemplatesFacade {
     });
 
     this.dialogRef.afterClosed().subscribe((company: Company) => {
-      console.log(company);
       this.companiesSubscription.unsubscribe();
     });
   }

@@ -1,15 +1,14 @@
-import {
-  HeaderComponentSettings,
-  HeaderConfig
-} from '../interfaces/single-component-settings/header-component-settings/header-component-settings.interface';
+import { HeaderConfig } from '../interfaces/single-component-settings/header-component-settings/header-component-settings.interface';
 import { SettingTypes } from '../interfaces/single-setting/setting-types';
 import { ComponentSettingsModel } from './component-settings.model';
+import { SlideToggleInnerSettingType } from '../interfaces/slide-toggle-inner-setting.enum';
 
 export class HeaderComponentSettingsModel extends ComponentSettingsModel<HeaderConfig>  {
   constructor(
     public id?,
     public currentState: HeaderConfig = {
       logo: {
+        slideToggleInnerSettingType: SlideToggleInnerSettingType.Logo,
         type: SettingTypes.SlideToggleWithScreen,
         config: {
           imgSrc: null,
@@ -19,12 +18,14 @@ export class HeaderComponentSettingsModel extends ComponentSettingsModel<HeaderC
         }
       },
       button: {
+        slideToggleInnerSettingType: SlideToggleInnerSettingType.Button,
         type: SettingTypes.SlideToggleWithScreen,
         config: {
           buttons: [{
             buttonLink: null,
             buttonText: 'Button'
-          }]
+          }],
+          isVisible: true
         }
       },
       pin: {

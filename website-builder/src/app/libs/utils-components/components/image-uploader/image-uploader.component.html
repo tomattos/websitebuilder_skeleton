@@ -1,0 +1,22 @@
+<div class="image-uploader">
+  <div class="image-uploader-src" (click)="openUploadImageDialog()">
+    <img [src]="image" alt="Image">
+  </div>
+
+  <!-- link for image -->
+  <a *ngIf="withLink" class="image-uploader-link"><i class="material-icons">link</i></a>
+
+  <!-- remove image -->
+  <a class="image-uploader-remove"
+     (click)="removeImage()"><i class="material-icons">close</i></a>
+</div>
+
+<ng-template #uploadImageDialog>
+  <div class="image-uploader-dialog">
+    <h3 class="image-uploader-dialog-name">Drop file here</h3>
+    <i class="material-icons">cloud_upload</i>
+    <input type="file"
+           class="image-uploader-file"
+           (change)="handleUploadImage($event.target.files[0])">
+  </div>
+</ng-template>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PagesFacade } from '../../pages.facade';
 import { Observable } from 'rxjs';
-import { Page } from '../../interfaces/page.interface';
+import { IPage } from '../../interfaces/page.interface';
 import { CreatePageModalComponent } from '../create-page-modal/create-page-modal.component';
 import { ComponentBuilderFacade } from '../../../component-builder/component-builder.facade';
 import { take } from 'rxjs/operators';
@@ -12,11 +12,10 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./pages-menu.component.scss']
 })
 export class PagesMenuComponent implements OnInit {
-  pages$: Observable<Page[]>;
+  pages$: Observable<IPage[]>;
 
   constructor(
-    private pagesFacade: PagesFacade,
-    private componentBuilderFacade: ComponentBuilderFacade
+    private pagesFacade: PagesFacade
   ) { }
 
   ngOnInit() {
@@ -26,11 +25,10 @@ export class PagesMenuComponent implements OnInit {
   changeCurrentPage(pageId: string) {
     this.isCurrent(pageId)
       .pipe(take(1))
-      .subscribe(async isCurrent => {
+      .subscribe(async (isCurrent) => {
         if (isCurrent) { return; }
 
         this.pagesFacade.changeCurrentPage(pageId);
-        await this.componentBuilderFacade.build();
       });
   }
 
@@ -42,7 +40,7 @@ export class PagesMenuComponent implements OnInit {
     this.pagesFacade.openCreatePageModal(CreatePageModalComponent);
   }
 
-  get currentPage$(): Observable<Page> {
+  get currentPage$(): Observable<IPage> {
     return this.pagesFacade.getCurrentPage;
   }
 }

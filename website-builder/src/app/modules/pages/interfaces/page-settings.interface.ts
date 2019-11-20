@@ -1,4 +1,4 @@
-export interface PageSettings {
+export interface IPageSettings {
   pageTitle: string | null;
   pageDescription: string | null;
   pageUrl: string;

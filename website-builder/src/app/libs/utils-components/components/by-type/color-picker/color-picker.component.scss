@@ -1,0 +1,15 @@
+.color-picker {
+  position: relative;
+  width: 260px;
+  height: 240px;
+
+  &--circle-control {
+    pointer-events: none;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.32);
+  }
+}

@@ -1,0 +1,9 @@
+<div class="logo-setting slide-toggle-with-screen-setting">
+  <!-- header -->
+  <wb-slide-toggle-with-screen-header title="Logo"></wb-slide-toggle-with-screen-header>
+
+  <!-- loader -->
+  <wb-image-uploader [withLink]="true"
+                     [image]="selfSetting?.config.imgSrc"
+                     (uploadEvent)="onUploadEvent($event)"></wb-image-uploader>
+</div>

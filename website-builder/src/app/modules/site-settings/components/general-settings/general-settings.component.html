@@ -1,0 +1,72 @@
+<div class="general-settings">
+  <form class="general-settings-form"
+        [formGroup]="form"
+        (ngSubmit)="onSaveForm()">
+    <!-- site name -->
+    <mat-form-field class="main-form-field">
+      <label>
+        <input
+          type="text"
+          placeholder="Site Name"
+          formControlName="siteName"
+          matInput>
+      </label>
+    </mat-form-field>
+
+    <!-- site description -->
+    <mat-form-field class="main-form-field">
+      <label>
+        <input
+          type="text"
+          placeholder="Site Description"
+          formControlName="siteDescription"
+          matInput>
+      </label>
+    </mat-form-field>
+
+    <!-- colors settings -->
+    <wb-color-picker [color]="generalSettings.primaryColor.config.value"
+                     (updateColorEvent)="updateColor($event, 'primaryColor')"></wb-color-picker>
+
+    <!-- typography settings -->
+    <div class="general-settings-typography">
+      <div *ngFor="let item of typography;"
+           class="general-settings-input-group">
+        <label class="general-settings-input-group-label">{{item[2]}}</label>
+        <!-- font family select -->
+        <mat-form-field class="main-form-field small general-settings-input-group-select">
+            <mat-select [formControlName]="item[0]">
+              <mat-option *ngFor="let option of generalSettings[item[0]].config.options"
+                          [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- font size input -->
+        <mat-form-field class="main-form-field small general-settings-input-group-input">
+          <label>
+            <input
+              type="number"
+              matInput
+              [formControlName]="item[1]">
+          </label>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- form buttons -->
+    <div class="form-btn-controllers">
+      <button mat-flat-button
+              type="button"
+              class="main-button"
+              color="secondary"
+              (click)="onCloseModal()">Cancel</button>
+
+      <button mat-flat-button
+              type="submit"
+              class="main-button"
+              color="primary">Save</button>
+    </div>
+  </form>
+</div>

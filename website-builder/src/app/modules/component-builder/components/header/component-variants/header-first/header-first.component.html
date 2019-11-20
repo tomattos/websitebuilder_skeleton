@@ -3,6 +3,7 @@
   <div class="container header-container">
     <!-- Logo -->
     <a class="header-logo"
+       *ngIf="settings.logo.config.isVisible"
        [href]="settings.logo.config.imgLink">
       <img [src]="settings.logo.config.imgSrc"
            [alt]="settings.logo.config.imgAlt">
@@ -15,10 +16,12 @@
     </nav>
 
     <!-- Button -->
-    <a
-      *ngFor="let button of settings.button.config.buttons"
-      type="button"
-      [href]="button.buttonLink"
-      class="header-button">{{button.buttonText}}</a>
+    <ng-container *ngIf="settings.button.config.isVisible">
+      <a
+        *ngFor="let button of settings.button.config.buttons"
+        type="button"
+        [href]="button.buttonLink"
+        class="header-button">{{button.buttonText}}</a>
+    </ng-container>
   </div>
 </header>

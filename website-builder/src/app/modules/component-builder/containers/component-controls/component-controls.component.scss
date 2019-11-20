@@ -17,6 +17,16 @@
     @include visibility_hide_animation;
   }
 
+  &-manipulation {
+    ::ng-deep .controls {
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      z-index: 1;
+    }
+    @include visibility_hide_animation;
+  }
+
   &-settings-modal {
     ::ng-deep .component-settings-edit-btn {
       position: absolute;
@@ -28,6 +38,7 @@
   }
 
   &:hover {
+    .component-controls-manipulation,
     .component-controls-components-menu,
     .component-controls-settings-modal {
       @include visibility_show_animation;

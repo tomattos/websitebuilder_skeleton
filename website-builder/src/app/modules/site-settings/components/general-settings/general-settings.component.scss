@@ -1,0 +1,52 @@
+.general-settings {
+  &-form {
+    display: flex;
+    flex-direction: column;
+
+    .main-form-field {
+      margin-bottom: 30px;
+    }
+  }
+
+  &-typography {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-input-group {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 'label label' 'select input';
+    flex: 0 0 50%;
+
+    & > :last-child {
+      width: 100px;
+      margin-left: 10px;
+    }
+
+    & > :first-child {
+      flex: 1;
+    }
+
+    &:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    &:nth-child(even) {
+      padding-left: 10px;
+    }
+  }
+
+  &-input-group-label {
+    margin-bottom: 10px;
+    grid-area: label;
+  }
+
+  &-input-proup-select {
+    grid-area: select;
+  }
+
+  &-input-proup-input {
+    grid-area: input;
+  }
+}

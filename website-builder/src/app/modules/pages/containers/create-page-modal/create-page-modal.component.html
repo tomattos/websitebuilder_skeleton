@@ -45,7 +45,8 @@
 
     <div class="create-page-modal-list">
       <mat-slide-toggle class="create-page-modal-item main-slide-toggle"
-                        formControlName="isHome">
+                        formControlName="isHome"
+                        (change)="onIsHomeChange($event)">
         Home page <i class="material-icons">home</i>
       </mat-slide-toggle>
     </div>

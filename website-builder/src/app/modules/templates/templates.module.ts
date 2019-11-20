@@ -4,15 +4,15 @@ import { CommonModule } from '@angular/common';
 import { TemplatesRoutingModule } from './templates-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { TemplatesEffects } from './state/effects/templates.effects';
+import { TemplatesEffects } from './store/effects/templates.effects';
 import { TemplatesFacade } from './templates.facade';
 import { TemplatesComponent } from './containers/templates/templates.component';
 import { TemplateComponent } from './components/template/template.component';
 import { MaterialModule } from '../../libs/material/material.module';
 import { ChooseCompanyModalComponent } from './components/choose-company-modal/choose-company-modal.component';
 import { TemplatesApi } from './api/templates.api';
-import * as fromTemplatesState from './state/reducers';
-import { CompaniesEffects } from './state/effects/companies.effects';
+import * as fromTemplatesState from './store/reducers';
+import { CompaniesEffects } from './store/effects/companies.effects';
 import { ComponentBuilderModule } from '../component-builder/component-builder.module';
 
 @NgModule({

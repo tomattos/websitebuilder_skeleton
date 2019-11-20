@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import generateId from 'uuid/v4';
+import v4 from 'uuid/v4';
 import { PagesFacade } from '../../pages.facade';
 import { PageModel } from '../../models/page.model';
 import { ComponentBuilderFacade } from '../../../component-builder/component-builder.facade';
 import { MatDialogRef } from '@angular/material';
+import { FormCreatorFacade } from '../../../../libs/form-creator/form-creator.facade.service';
 
 @Component({
   selector: 'wb-create-page-modal',
@@ -17,22 +18,36 @@ export class CreatePageModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<CreatePageModalComponent>,
     private pagesFacade: PagesFacade,
-    private componentBuilderFacade: ComponentBuilderFacade
+    private componentBuilderFacade: ComponentBuilderFacade,
+    private formCreatorFacade: FormCreatorFacade
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      pageName: new FormControl('', [Validators.required]),
-      pageTitle: new FormControl('', [Validators.required]),
-      pageDescription: new FormControl('', [Validators.required]),
-      pageUrl: new FormControl('', [Validators.required]),
-      isHome: new FormControl(false)
-    });
+    const fields = [
+      ['pageName', '', ['required', 'maxLength:32', 'minLength:5']],
+      ['pageTitle', '', ['required', 'maxLength:32', 'minLength:5']],
+      ['pageDescription', '', ['required', 'maxLength:32', 'minLength:5']],
+      ['pageUrl', '', ['required', 'maxLength:32', 'minLength:5']],
+      ['isHome', false]
+    ];
+
+    this.form = this.formCreatorFacade
+      .setFields(fields)
+      .build();
+  }
+
+  onIsHomeChange(event) {
+    if (event.checked) {
+      this.form.patchValue({ pageUrl: '' });
+      this.form.controls.pageUrl.disable();
+    } else {
+      this.form.controls.pageUrl.enable();
+    }
   }
 
   async createPage() {
     const { pageUrl, pageTitle, pageName, isHome, pageDescription } = this.form.value;
-    const id = generateId();
+    const id = v4();
     const newPage = new PageModel(
       id,
       {
@@ -44,7 +59,7 @@ export class CreatePageModalComponent implements OnInit {
       pageName
     );
 
-    this.pagesFacade.createPage(newPage);
+    await this.pagesFacade.createPage(newPage);
     this.closeModal();
     await this.componentBuilderFacade.build();
   }

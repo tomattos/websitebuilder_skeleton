@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentControlsHostDirective } from '../../directives/component-controls-host.directive';
 import { ComponentSettings } from '../../../component-settings/interfaces/component-settings.interface';
 import { ComponentSchema } from '../../interfaces/component-schema.interface';
+import { ComponentBuilderFacade } from '../../component-builder.facade';
 
 @Component({
   selector: 'wb-component-controls',

@@ -11,7 +11,7 @@ import { SingleTemplateFacade } from '../../../single-template/single-template.f
   styleUrls: ['./components-menu.component.scss']
 })
 export class ComponentsMenuComponent implements OnInit {
-  @ViewChild('componentMenuAddButton', {static: true}) trigger: ElementRef;
+  @ViewChild('componentMenuAddButton', { static: true }) trigger: ElementRef;
 
   isVisible = false;
   @Input() targetComponentSeq: number;

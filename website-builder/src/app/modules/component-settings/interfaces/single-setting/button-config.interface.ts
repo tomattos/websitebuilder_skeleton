@@ -5,4 +5,5 @@ export interface SingleButtonConfig {
 
 export interface ButtonConfig {
   buttons: SingleButtonConfig[];
+  isVisible: boolean;
 }

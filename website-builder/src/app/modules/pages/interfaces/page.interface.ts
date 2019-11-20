@@ -1,7 +1,7 @@
-import { PageSettings } from './page-settings.interface';
+import { IPageSettings } from './page-settings.interface';
 
-export interface Page {
+export interface IPage {
   id: string;
-  settings: PageSettings;
+  settings: IPageSettings;
   pageName: string;
 }
